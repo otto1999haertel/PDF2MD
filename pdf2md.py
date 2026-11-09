@@ -2,7 +2,8 @@
 
 Usage:
     pip install pymupdf4llm
-    python pdf_to_markdown.py INPUT_DIR [OUTPUT_DIR] [--recursive] [--overwrite]
+    python pdf2md.py                 # converts every PDF in the folder this script is in
+    python pdf2md.py INPUT_DIR [OUTPUT_DIR] [--recursive] [--overwrite]
 """
 
 import argparse
@@ -29,7 +30,8 @@ def convert_pdf(pdf_path: Path, out_path: Path) -> tuple[int, int]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Convert PDFs to Markdown for RAG.")
-    ap.add_argument("input_dir")
+    ap.add_argument("input_dir", nargs="?", default=str(Path(__file__).resolve().parent),
+                    help="folder with PDFs (default: the folder this script is in)")
     ap.add_argument("output_dir", nargs="?")
     ap.add_argument("--recursive", action="store_true")
     ap.add_argument("--overwrite", action="store_true", help="replace existing .md files")
